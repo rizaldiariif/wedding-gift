@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#FBF7F2">
 <title>Wedding Gift — Rizaldi &amp; Aisyah</title>
-<meta name="description" content="Daftar hadiah pernikahan Rizaldi &amp; Aisyah. Pilih hadiah, kirim kado, atau berikan tanda kasih.">
+<meta name="description" content="Daftar hadiah pernikahan Rizaldi &amp; Aisyah.">
 <meta property="og:title" content="Wedding Gift — Rizaldi &amp; Aisyah">
 <meta property="og:description" content="Bagi keluarga dan kerabat yang ingin memberikan tanda kasih, kami telah menyiapkan daftar hadiah pilihan.">
 <meta property="og:type" content="website">
@@ -24,19 +24,10 @@
       <span class="brand-mono" data-text="monogram">R &amp; A</span>
       <span class="brand-label" data-text="shortNames">Rizaldi &amp; Aisyah</span>
     </a>
-    <nav class="nav-links" id="nav-links" aria-label="Navigasi utama">
-      <a href="#hadiah" class="is-active">Daftar Hadiah</a>
-      <a href="#cara">Cara Memberi</a>
-      <a href="#kirim">Kirim Kado</a>
-      <a href="#ucapan">Ucapan</a>
-    </nav>
     <a class="btn btn-gold btn-sm nav-cta" id="nav-wa" href="#" target="_blank" rel="noopener">
       <span class="icon" data-icon="chat"></span>
       <span class="nav-cta-label">Hubungi Kami</span>
     </a>
-    <button class="nav-toggle" id="nav-toggle" aria-label="Buka menu" aria-expanded="false" aria-controls="nav-links">
-      <span></span><span></span><span></span>
-    </button>
   </div>
 </header>
 
@@ -104,104 +95,6 @@
     </div>
   </section>
 
-  <section class="section steps" id="cara">
-    <div class="container">
-      <div class="section-head reveal">
-        <p class="eyebrow">Cara Memberi</p>
-        <h2 class="section-title">Tiga Langkah Sederhana</h2>
-      </div>
-      <ol class="step-grid">
-        <li class="step-card reveal">
-          <span class="step-num">01</span>
-          <h3>Pilih Hadiah</h3>
-          <p>Telusuri daftar hadiah dan pilih yang paling sesuai dengan hati Anda.</p>
-        </li>
-        <li class="step-card reveal">
-          <span class="step-num">02</span>
-          <h3>Konfirmasi</h3>
-          <p>Klik tombol WhatsApp pada hadiah pilihan Anda untuk memberi tahu kami.</p>
-        </li>
-        <li class="step-card reveal">
-          <span class="step-num">03</span>
-          <h3>Kirim atau Transfer</h3>
-          <p>Kirim hadiah ke alamat kami, atau salurkan tanda kasih melalui rekening yang tersedia.</p>
-        </li>
-      </ol>
-    </div>
-  </section>
-
-  <section class="section send" id="kirim">
-    <div class="container">
-      <div class="section-head reveal">
-        <p class="eyebrow eyebrow-light">Kirim Kado</p>
-        <h2 class="section-title">Alamat &amp; Tanda Kasih</h2>
-        <p class="section-sub">Anda dapat mengirim hadiah fisik ke alamat berikut, atau mengirimkan tanda kasih melalui transfer bank / e-wallet.</p>
-      </div>
-      <div class="send-grid">
-        <article class="send-card send-card-wide reveal">
-          <span class="send-icon" data-icon="pin"></span>
-          <div class="addr-head">
-            <h3>Alamat Pengiriman</h3>
-            <p class="addr-name" data-text="shipName">Rizaldi &amp; Aisyah</p>
-          </div>
-          <div class="addr-body">
-            <p class="addr-line" data-text="shipAddress"></p>
-            <p class="addr-line" data-text="shipPhone"></p>
-          </div>
-          <button class="btn btn-sm btn-gold" data-copy="address">
-            <span class="icon" data-icon="copy"></span> Salin Alamat
-          </button>
-        </article>
-
-        <article class="send-card reveal">
-          <span class="send-icon" data-icon="wallet"></span>
-          <h3>Transfer Bank</h3>
-          <ul class="pay-list" id="bank-list"></ul>
-        </article>
-
-        <article class="send-card reveal">
-          <span class="send-icon" data-icon="chat"></span>
-          <h3>E-Wallet &amp; QRIS</h3>
-          <ul class="pay-list" id="ewallet-list"></ul>
-          <button class="btn btn-sm btn-outline-light" id="qris-btn">
-            <span class="icon" data-icon="external"></span> Tanya QRIS via WhatsApp
-          </button>
-        </article>
-      </div>
-      <p class="send-note reveal">
-        <span class="icon" data-icon="heart"></span>
-        Setelah mengirim kado atau transfer, mohon konfirmasi via WhatsApp agar dapat kami catat dengan baik. Terima kasih.
-      </p>
-    </div>
-  </section>
-
-  <section class="section wishes" id="ucapan">
-    <div class="container">
-      <div class="section-head reveal">
-        <p class="eyebrow">Ucapan &amp; Doa</p>
-        <h2 class="section-title">Tinggalkan Pesan Hangat</h2>
-        <p class="section-sub">Doa dan ucapan Anda sangat berarti bagi kami. Tuliskan di bawah ini.</p>
-      </div>
-      <div class="wish-layout">
-        <form class="wish-form reveal" id="wish-form" novalidate>
-          <label>
-            <span>Nama</span>
-            <input type="text" id="wish-name" name="name" placeholder="Nama Anda" required maxlength="60">
-          </label>
-          <label>
-            <span>Ucapan</span>
-            <textarea id="wish-message" name="message" rows="4" placeholder="Tulis doa dan ucapan terbaik Anda…" required maxlength="400"></textarea>
-          </label>
-          <button class="btn btn-primary" type="submit">
-            <span class="icon" data-icon="send"></span> Kirim Ucapan
-          </button>
-          <p class="form-note">Ucapan tersimpan di perangkat ini dan tidak dikirim ke server mana pun.</p>
-        </form>
-        <div class="wish-list" id="wish-list"></div>
-      </div>
-    </div>
-  </section>
-
 </main>
 
 <footer class="footer">
@@ -210,7 +103,6 @@
     <p class="footer-names" data-text="names">Rizaldi &amp; Aisyah</p>
     <p class="footer-date" data-text="dateLabel">Sabtu, 12 Desember 2026</p>
     <p class="footer-thanks">Terima kasih atas doa, kasih, dan kehadiran Anda.</p>
-    <p class="footer-small">Dibuat dengan <span class="icon" data-icon="heart"></span> untuk hari bahagia kami</p>
   </div>
   <a class="to-top" href="#hadiah" aria-label="Kembali ke atas"><span class="icon" data-icon="chevron-down"></span></a>
 </footer>

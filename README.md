@@ -1,8 +1,7 @@
 # Wedding Gift Website
 
-A single-page wedding gift registry for friends and family to browse gifts, claim
-them, and send cash gifts. No build step, no dependencies — plain HTML, CSS, and
-JavaScript.
+A single-page wedding gift registry for friends and family to browse gifts and
+reserve them. No build step, no dependencies — plain HTML, CSS, and JavaScript.
 
 ## Preview locally
 
@@ -23,12 +22,8 @@ Everything lives in **`js/data.js`**:
 | Wedding date, akad, resepsi, venue | `CONFIG.wedding` |
 | Registry intro paragraph | `CONFIG.text.introText` |
 | WhatsApp number (`62812...` format) | `CONFIG.contact.whatsapp` |
-| Shipping address | `CONFIG.shipping` |
-| Bank accounts | `CONFIG.banks` |
-| E-wallets / QRIS toggle | `CONFIG.ewallets`, `CONFIG.qrisAvailable` |
 | Gift list | `GIFTS` |
 | Category tabs | `CATEGORIES` |
-| Seed messages on the wishes wall | `SEED_WISHES` |
 
 ### Adding a gift
 
@@ -53,30 +48,17 @@ photo automatically.
 ## Features
 
 - Registry-first layout: the page opens straight on the gift list, no landing page
-- Countdown to the wedding day
-- Gift registry with search, category filters, and sorting
-- Gift detail modal with WhatsApp confirmation and shop link
+- Gift list with search, category filters, and sorting
+- Gift detail modal with a WhatsApp confirmation link and the shop link
 - "Already gifted" marker persisted in `localStorage`
-- Shipping address, bank accounts, and e-wallets with one-tap copy
-- Wishes wall with a form (saved in `localStorage`, no server)
+- Countdown to the wedding day
 - "Save the date" `.ics` download and share button
 - Responsive, keyboard-accessible, reduced-motion friendly
 
 ## Notes
 
-- Claims and wishes are stored per-device in `localStorage`. For shared state
-  across all guests, connect a backend (Supabase, Firebase, Google Sheets API)
-  to the `CLAIMS_KEY` / `WISHES_KEY` logic in `js/app.js`.
-- Because the site is static, deploy it anywhere: GitHub Pages, Netlify, Vercel,
+- Claims are stored per-device in `localStorage`. For shared state across all
+  guests, connect a backend (Supabase, Firebase, Google Sheets API) to the
+  `CLAIMS_KEY` logic in `js/app.js`.
+- Because the site is static, deploy it anywhere: Vercel, GitHub Pages, Netlify,
   Cloudflare Pages, or any web host. Just upload the folder.
-
-## Deploy to GitHub Pages
-
-```bash
-git init && git add . && git commit -m "Wedding gift website"
-git remote add origin git@github.com:<user>/<repo>.git
-git push -u origin main
-```
-
-Then enable Pages for the repository (Settings → Pages → Deploy from branch →
-`main` / root).

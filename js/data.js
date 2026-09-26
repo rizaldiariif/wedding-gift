@@ -30,28 +30,7 @@ const CONFIG = {
   contact: {
     whatsapp: "6281234567890",
     phoneLabel: "+62 812-3456-7890"
-  },
-
-  shipping: {
-    name: "Rizaldi & Aisyah",
-    address:
-      "Jl. Melati Indah No. 21, RT 04 / RW 07\nKel. Menteng, Kec. Menteng\nJakarta Pusat 10310",
-    phone: "+62 812-3456-7890"
-  },
-
-  banks: [
-    { bank: "BCA", number: "1234567890", holder: "Rizaldi Arief" },
-    { bank: "Mandiri", number: "0987654321", holder: "Aisyah Putri" },
-    { bank: "BNI", number: "0123456789", holder: "Rizaldi Arief" }
-  ],
-
-  ewallets: [
-    { bank: "GoPay", number: "0812-3456-7890", holder: "Rizaldi Arief" },
-    { bank: "OVO", number: "0812-3456-7890", holder: "Aisyah Putri" },
-    { bank: "DANA", number: "0812-3456-7890", holder: "Rizaldi Arief" }
-  ],
-
-  qrisAvailable: true
+  }
 };
 
 const CATEGORIES = [
@@ -289,33 +268,12 @@ const GIFTS = [
   {
     id: "tanda-kasih",
     title: "Tanda Kasih / Amplop Digital",
-    desc: "Nominal bebas, disalurkan melalui transfer bank atau e-wallet.",
+    desc: "Nominal bebas. Silakan konfirmasi via WhatsApp untuk detailnya.",
     price: null,
     priceLabel: "Nominal bebas",
     category: "lainnya",
     icon: "wallet",
     qty: 1,
     link: ""
-  }
-];
-
-const SEED_WISHES = [
-  {
-    name: "Keluarga Hartono",
-    message:
-      "Barakallahu lakuma wa baraka alaikuma wa jama'a bainakuma fii khair. Semoga menjadi keluarga yang sakinah, mawaddah, warahmah.",
-    time: "2026-09-20T10:00:00+07:00"
-  },
-  {
-    name: "Dina & Bagas",
-    message:
-      "Selamat menempuh hidup baru! Semoga selalu bahagia, saling menguatkan, dan dikelilingi orang-orang baik.",
-    time: "2026-09-21T14:30:00+07:00"
-  },
-  {
-    name: "Tim Kantor",
-    message:
-      "Akhirnya! Semoga pernikahannya langgeng sampai kakek nenek, jangan lupa traktirannya ya.",
-    time: "2026-09-22T09:15:00+07:00"
   }
 ];

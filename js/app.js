@@ -5,7 +5,6 @@
   const $$ = (sel, ctx) => Array.prototype.slice.call((ctx || document).querySelectorAll(sel));
 
   const CLAIMS_KEY = "wg:claims:v1";
-  const WISHES_KEY = "wg:wishes:v1";
 
   const store = {
     get(key, fallback) {
@@ -26,8 +25,6 @@
   };
 
   let claims = store.get(CLAIMS_KEY, {});
-  let wishes = store.get(WISHES_KEY, null);
-  const COPY = {};
   const state = { query: "", category: "semua", sort: "featured" };
 
   function svgIcon(name) {
@@ -107,13 +104,7 @@
       names: CONFIG.couple.names,
       dateLabel: CONFIG.wedding.dateLabel,
       city: CONFIG.wedding.city,
-      introText: CONFIG.text.introText,
-      akad: CONFIG.wedding.akad,
-      resepsi: CONFIG.wedding.resepsi,
-      venue: CONFIG.wedding.venue,
-      shipName: CONFIG.shipping.name,
-      shipAddress: CONFIG.shipping.address,
-      shipPhone: CONFIG.shipping.phone
+      introText: CONFIG.text.introText
     };
     Object.keys(map).forEach(function (key) {
       $$('[data-text="' + key + '"]').forEach(function (el) { el.textContent = map[key]; });
@@ -244,6 +235,10 @@
     document.body.classList.remove("no-scroll");
   }
 
+  function giftById(id) {
+    return GIFTS.filter(function (g) { return g.id === id; })[0];
+  }
+
   function toggleClaim(id) {
     if (claims[id]) {
       delete claims[id];
@@ -258,64 +253,6 @@
     }
     const gift = giftById(id);
     toast(claims[id] ? "Ditandai: " + gift.title : "Tanda dihapus: " + gift.title);
-  }
-
-  function giftById(id) {
-    return GIFTS.filter(function (g) { return g.id === id; })[0];
-  }
-
-  function renderSend() {
-    COPY.address = CONFIG.shipping.name + "\n" + CONFIG.shipping.address + "\nTelp: " + CONFIG.shipping.phone;
-
-    $("#bank-list").innerHTML = CONFIG.banks.map(function (item, i) {
-      const key = "bank-" + i;
-      COPY[key] = item.number.replace(/[^0-9]/g, "");
-      return (
-        '<li class="pay-item">' +
-          "<div>" +
-            "<strong>" + esc(item.bank) + "</strong>" +
-            "<span>" + esc(item.number) + "</span>" +
-            "<small>a.n. " + esc(item.holder) + "</small>" +
-          "</div>" +
-          '<button type="button" class="pay-copy" data-copy="' + key + '" aria-label="Salin nomor ' + esc(item.bank) + '"><span class="icon" data-icon="copy"></span></button>' +
-        "</li>"
-      );
-    }).join("");
-
-    $("#ewallet-list").innerHTML = CONFIG.ewallets.map(function (item, i) {
-      const key = "ewallet-" + i;
-      COPY[key] = item.number;
-      return (
-        '<li class="pay-item">' +
-          "<div>" +
-            "<strong>" + esc(item.bank) + "</strong>" +
-            "<span>" + esc(item.number) + "</span>" +
-            "<small>a.n. " + esc(item.holder) + "</small>" +
-          "</div>" +
-          '<button type="button" class="pay-copy" data-copy="' + key + '" aria-label="Salin nomor ' + esc(item.bank) + '"><span class="icon" data-icon="copy"></span></button>' +
-        "</li>"
-      );
-    }).join("");
-
-    if (!CONFIG.qrisAvailable) $("#qris-btn").hidden = true;
-    hydrateIcons($(".send"));
-  }
-
-  function wishCard(wish) {
-    const date = new Date(wish.time);
-    const label = isNaN(date) ? "" : date.toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
-    return (
-      '<article class="wish-card">' +
-        "<p>" + esc(wish.message) + "</p>" +
-        "<footer><strong>" + esc(wish.name) + "</strong><span>" + esc(label) + "</span></footer>" +
-      "</article>"
-    );
-  }
-
-  function renderWishes() {
-    const list = wishes && wishes.length ? wishes : SEED_WISHES;
-    const sorted = list.slice().sort(function (a, b) { return new Date(b.time) - new Date(a.time); });
-    $("#wish-list").innerHTML = sorted.map(wishCard).join("");
   }
 
   function countdown() {
@@ -400,34 +337,11 @@
 
   function initNav() {
     const nav = $("#site-nav");
-    const toggle = $("#nav-toggle");
-    const links = $("#nav-links");
-
     function onScroll() {
       nav.classList.toggle("scrolled", window.scrollY > 40);
-      let current = "hadiah";
-      $$("main section[id]").forEach(function (section) {
-        if (section.getBoundingClientRect().top <= 140) current = section.id;
-      });
-      $$("a", links).forEach(function (a) {
-        a.classList.toggle("is-active", a.getAttribute("href") === "#" + current);
-      });
     }
-
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
-
-    toggle.addEventListener("click", function () {
-      const open = links.classList.toggle("open");
-      toggle.setAttribute("aria-expanded", open ? "true" : "false");
-    });
-
-    links.addEventListener("click", function (event) {
-      if (event.target.closest("a")) {
-        links.classList.remove("open");
-        toggle.setAttribute("aria-expanded", "false");
-      }
-    });
   }
 
   function initReveal() {
@@ -445,6 +359,26 @@
       });
     }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
     items.forEach(function (el) { observer.observe(el); });
+  }
+
+  function deepLink() {
+    let params;
+    try {
+      params = new URLSearchParams(window.location.search);
+    } catch (err) {
+      return;
+    }
+    const cat = params.get("cat");
+    if (cat && CATEGORIES.some(function (c) { return c.id === cat; })) {
+      state.category = cat;
+      renderChips();
+      renderGifts();
+    }
+    const giftId = params.get("gift");
+    if (giftId) {
+      const gift = giftById(giftId);
+      if (gift) openModal(gift);
+    }
   }
 
   function initEvents() {
@@ -480,17 +414,6 @@
         return;
       }
 
-      const copyBtn = event.target.closest("[data-copy]");
-      if (copyBtn) {
-        const text = COPY[copyBtn.dataset.copy] || "";
-        copyText(text).then(function () {
-          toast("Disalin ke clipboard");
-        }).catch(function () {
-          toast("Gagal menyalin, salin manual ya");
-        });
-        return;
-      }
-
       if (event.target.closest("[data-close]")) closeModal();
     });
 
@@ -498,56 +421,14 @@
       if (event.key === "Escape" && !$("#modal").hidden) closeModal();
     });
 
-    $("#wish-form").addEventListener("submit", function (event) {
-      event.preventDefault();
-      const name = $("#wish-name").value.trim();
-      const message = $("#wish-message").value.trim();
-      if (!name || !message) {
-        toast("Mohon isi nama dan ucapan Anda");
-        return;
-      }
-      const list = wishes && wishes.length ? wishes : SEED_WISHES.slice();
-      list.push({ name: name, message: message, time: new Date().toISOString() });
-      wishes = list;
-      store.set(WISHES_KEY, wishes);
-      renderWishes();
-      event.target.reset();
-      toast("Terima kasih atas ucapan dan doanya!");
-    });
-
     $("#save-date").addEventListener("click", saveDate);
     $("#share-page").addEventListener("click", sharePage);
-    $("#qris-btn").addEventListener("click", function () {
-      window.open(waLink("Halo " + CONFIG.couple.shortNames + ", boleh minta QRIS untuk tanda kasih pernikahan?"), "_blank", "noopener");
-    });
-  }
-
-  function deepLink() {
-    let params;
-    try {
-      params = new URLSearchParams(window.location.search);
-    } catch (err) {
-      return;
-    }
-    const cat = params.get("cat");
-    if (cat && CATEGORIES.some(function (c) { return c.id === cat; })) {
-      state.category = cat;
-      renderChips();
-      renderGifts();
-    }
-    const giftId = params.get("gift");
-    if (giftId) {
-      const gift = giftById(giftId);
-      if (gift) openModal(gift);
-    }
   }
 
   function init() {
     applyStaticText();
     renderChips();
     renderGifts();
-    renderSend();
-    renderWishes();
     countdown();
     initNav();
     initReveal();
