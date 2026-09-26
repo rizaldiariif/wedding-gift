@@ -23,8 +23,6 @@ const CONFIG = {
   },
 
   text: {
-    heroLead:
-      "Dengan penuh sukacita kami mengundang Anda untuk menjadi bagian dari hari bahagia kami.",
     introText:
       "Bagi keluarga dan kerabat yang ingin memberikan tanda kasih, kami telah mengumpulkan beberapa opsi kebutuhan di sini. Terima kasih tulus atas doa dan perhatian yang diberikan."
   },

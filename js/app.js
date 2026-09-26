@@ -107,7 +107,6 @@
       names: CONFIG.couple.names,
       dateLabel: CONFIG.wedding.dateLabel,
       city: CONFIG.wedding.city,
-      heroLead: CONFIG.text.heroLead,
       introText: CONFIG.text.introText,
       akad: CONFIG.wedding.akad,
       resepsi: CONFIG.wedding.resepsi,
@@ -406,7 +405,7 @@
 
     function onScroll() {
       nav.classList.toggle("scrolled", window.scrollY > 40);
-      let current = "beranda";
+      let current = "hadiah";
       $$("main section[id]").forEach(function (section) {
         if (section.getBoundingClientRect().top <= 140) current = section.id;
       });

@@ -21,7 +21,7 @@ Everything lives in **`js/data.js`**:
 | --- | --- |
 | Couple names, monogram | `CONFIG.couple` |
 | Wedding date, akad, resepsi, venue | `CONFIG.wedding` |
-| Hero and intro paragraphs | `CONFIG.text` |
+| Registry intro paragraph | `CONFIG.text.introText` |
 | WhatsApp number (`62812...` format) | `CONFIG.contact.whatsapp` |
 | Shipping address | `CONFIG.shipping` |
 | Bank accounts | `CONFIG.banks` |
@@ -52,6 +52,7 @@ photo automatically.
 
 ## Features
 
+- Registry-first layout: the page opens straight on the gift list, no landing page
 - Countdown to the wedding day
 - Gift registry with search, category filters, and sorting
 - Gift detail modal with WhatsApp confirmation and shop link
