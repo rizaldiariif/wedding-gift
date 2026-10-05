@@ -165,6 +165,17 @@ const GIFTS = [
     image: "images/remington-s5408.jpg",
     qty: 1,
     link: "https://shopee.co.id/Remington-Catokan-Pelurus-Rambut-Mineral-Glow-S5408-i.44277832.4465739778?extraParams=%7B%22display_model_id%22%3A161126274006%2C%22model_selection_logic%22%3A3%7D"
+  },
+  {
+    id: "philips-hair-dryer-3000",
+    title: "Philips Hair Dryer 3000 BHD308",
+    desc: "Pengering rambut 1600W dengan aksesori ThermoProtect yang melindungi rambut dari panas berlebih.",
+    price: 389400,
+    category: "lainnya",
+    icon: "fan",
+    image: "images/philips-hair-dryer-3000.jpg",
+    qty: 1,
+    link: "https://shopee.co.id/Philips-Hair-Dryer-3000-Pengering-Rambut-Melindungi-Rambut-dengan-ThermoProtect-Teknologi-Hitam-BHD308-10-i.438891817.8854227554?extraParams=%7B%22display_model_id%22%3A75392726733%2C%22model_selection_logic%22%3A3%7D"
   }
 ];
 
