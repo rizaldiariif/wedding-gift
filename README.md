@@ -63,15 +63,19 @@ Spaces can be written as `+` or `%20` in the URL.
 - Registry-first layout: the page opens straight on the gift list, no landing page
 - Gift list with search, category filters, and sorting
 - Gift detail modal with a WhatsApp confirmation link and the shop link
-- "Already gifted" marker persisted in `localStorage`
+- "Already gifted" marker synced globally (Upstash Redis) so two guests can't reserve the same gift
 - Countdown to the wedding day
 - "Save the date" `.ics` download and share button
 - Responsive, keyboard-accessible, reduced-motion friendly
 
 ## Notes
 
-- Claims are stored per-device in `localStorage`. For shared state across all
-  guests, connect a backend (Supabase, Firebase, Google Sheets API) to the
-  `CLAIMS_KEY` logic in `js/app.js`.
-- Because the site is static, deploy it anywhere: Vercel, GitHub Pages, Netlify,
-  Cloudflare Pages, or any web host. Just upload the folder.
+- Claims are stored globally in Upstash Redis through `api/claims.js`. On Vercel,
+  install the Upstash Redis integration (Storage → Marketplace) and the env vars
+  (`KV_REST_API_URL` / `KV_REST_API_TOKEN`) are set automatically;
+  `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` also work.
+- When the API is not reachable (opening `index.html` directly, plain
+  `python3 -m http.server`, or a host without serverless functions), the site
+  falls back to per-device `localStorage` so it still works.
+- To run the API locally, use `npx vercel dev` (after `npx vercel env pull`).
+- Everything else is static, so the site still deploys anywhere.

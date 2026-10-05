@@ -5,6 +5,7 @@
   const $$ = (sel, ctx) => Array.prototype.slice.call((ctx || document).querySelectorAll(sel));
 
   const CLAIMS_KEY = "wg:claims:v1";
+  const CLAIMS_API = "api/claims";
 
   const store = {
     get(key, fallback) {
@@ -24,7 +25,8 @@
     }
   };
 
-  let claims = store.get(CLAIMS_KEY, {});
+  let claims = {};
+  let claimsMode = "local";
   const state = { query: "", category: "semua", sort: "featured" };
 
   function svgIcon(name) {
@@ -94,6 +96,43 @@
         reject(err);
       }
       document.body.removeChild(area);
+    });
+  }
+
+  function fetchRemoteClaims() {
+    if (typeof fetch !== "function") return Promise.reject(new Error("fetch unavailable"));
+    const ctrl = typeof AbortController !== "undefined" ? new AbortController() : null;
+    const timer = ctrl ? setTimeout(function () { ctrl.abort(); }, 4000) : null;
+    return fetch(CLAIMS_API, { headers: { Accept: "application/json" }, signal: ctrl ? ctrl.signal : undefined })
+      .then(function (res) {
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return res.json();
+      })
+      .then(function (data) {
+        if (timer) clearTimeout(timer);
+        return data && data.claims ? data.claims : {};
+      });
+  }
+
+  function loadClaims() {
+    return fetchRemoteClaims().then(function (remote) {
+      claimsMode = "remote";
+      claims = remote;
+    }).catch(function () {
+      claimsMode = "local";
+      claims = store.get(CLAIMS_KEY, {});
+    });
+  }
+
+  function postClaim(id, action) {
+    return fetch(CLAIMS_API, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({ id: id, action: action })
+    }).then(function (res) {
+      return res.json().catch(function () { return {}; }).then(function (data) {
+        return { ok: res.ok, status: res.status, claims: data.claims || null };
+      });
     });
   }
 
@@ -245,7 +284,7 @@
         '<h3 id="modal-title">' + esc(gift.title) + "</h3>" +
         '<p class="desc">' + esc(gift.desc) + "</p>" +
         facts +
-        '<p class="modal-note">Tanda “sudah dibeli” tersimpan di perangkat ini. Mohon konfirmasi via WhatsApp agar tidak dobel.</p>' +
+        '<p class="modal-note">Tanda “sudah dibeli” tersimpan bersama dan terlihat semua tamu. Mohon konfirmasi via WhatsApp agar tidak dobel.</p>' +
         actions +
       "</div>";
 
@@ -265,20 +304,45 @@
     return GIFTS.filter(function (g) { return g.id === id; })[0];
   }
 
-  function toggleClaim(id) {
-    if (claims[id]) {
-      delete claims[id];
-    } else {
-      claims[id] = true;
-    }
-    store.set(CLAIMS_KEY, claims);
+  function settleClaim(id, nextClaims) {
+    if (nextClaims) claims = nextClaims;
     renderGifts();
     if (!$("#modal").hidden) {
       const gift = giftById(id);
       if (gift) openModal(gift);
     }
+  }
+
+  function toggleClaim(id) {
     const gift = giftById(id);
-    toast(claims[id] ? "Ditandai: " + gift.title : "Tanda dihapus: " + gift.title);
+    const action = claims[id] ? "release" : "claim";
+    const doneMessage = action === "release" ? "Tanda dihapus: " + gift.title : "Ditandai: " + gift.title;
+
+    if (claimsMode === "local") {
+      if (action === "release") delete claims[id]; else claims[id] = true;
+      store.set(CLAIMS_KEY, claims);
+      settleClaim(id);
+      toast(doneMessage);
+      return;
+    }
+
+    if (action === "release") delete claims[id]; else claims[id] = true;
+    renderGifts();
+
+    postClaim(id, action).then(function (result) {
+      if (result.status === 409) {
+        settleClaim(id, result.claims);
+        toast("Hadiah ini baru saja ditandai tamu lain");
+        return;
+      }
+      if (!result.ok) throw new Error("HTTP " + result.status);
+      settleClaim(id, result.claims);
+      toast(doneMessage);
+    }).catch(function () {
+      if (action === "release") claims[id] = true; else delete claims[id];
+      renderGifts();
+      toast("Gagal menyimpan, coba lagi");
+    });
   }
 
   function countdown() {
@@ -464,14 +528,16 @@
       $("#guest-greeting").hidden = false;
     }
 
-    renderChips();
-    renderGifts();
-    countdown();
-    initNav();
-    initReveal();
-    initEvents();
-    hydrateIcons(document);
-    deepLink();
+    loadClaims().then(function () {
+      renderChips();
+      renderGifts();
+      countdown();
+      initNav();
+      initReveal();
+      initEvents();
+      hydrateIcons(document);
+      deepLink();
+    });
   }
 
   if (document.readyState === "loading") {
