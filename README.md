@@ -61,6 +61,7 @@ Spaces can be written as `+` or `%20` in the URL.
 
 - Personalized guest links via `?name=` validated against the `GUESTS` list
 - Registry-first layout: the page opens straight on the gift list, no landing page
+- Status page (`status.html`) showing every gift and the guest who marked it
 - Gift list with search, category filters, and sorting
 - Gift detail modal with a WhatsApp confirmation link and the shop link
 - "Already gifted" marker synced globally (Upstash Redis) and saved with the registered guest's name
