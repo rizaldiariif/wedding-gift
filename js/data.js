@@ -121,6 +121,17 @@ const GIFTS = [
     image: "images/steamer-philips.jpg",
     qty: 1,
     link: "https://www.tokopedia.com/philips-estore/philips-handheld-steamer-sth5030-biru-setrika-uap-listrik-paling-fleksibel-portabel-setrika-uap-ringan-philips-setrika-uap-setrika-uap-listrik-strika-uap-setrika-philips-uap-sth5030-20-1730180217855772662"
+  },
+  {
+    id: "gree-circool",
+    title: "Gree Circool Air Circulation Fan",
+    desc: "Kipas sirkulasi udara dengan Ion Plasma untuk ruang tamu, kamar, dan kantor. Pilihan 13S / 14L.",
+    price: 1104000,
+    category: "rumah",
+    icon: "fan",
+    image: "images/gree-circool.jpg",
+    qty: 1,
+    link: "https://www.tokopedia.com/gadventia/gree-circool-13s-dan-circool-14l-air-circulation-fan-ion-plasma-circool-kipas-angin-pendingin-ruangan-tamu-kamar-tidur-kantor-gcf-circool-13s-gcf-circool-14l-1730355449051318167?aff_unique_id=VjgLB722aX_I8eF11KqyJt5rQmeFGXWAKUhN5sU5TF6EZJQKRGiPk8HC9F6HJMb9dbctIECJPQ%3D%3D&channel=salinlink&utm_source=salinlink&utm_medium=affiliate-share&utm_campaign=affiliateshare-pdp-VjgLB722aX_I8eF11KqyJt5rQmeFGXWAKUhN5sU5TF6EZJQKRGiPk8HC9F6HJMb9dbctIECJPQ%3D%3D-100000258721-0-051026&scene=pdp"
   }
 ];
 
