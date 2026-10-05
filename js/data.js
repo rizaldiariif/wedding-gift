@@ -33,6 +33,13 @@ const CONFIG = {
   }
 };
 
+/* Daftar nama tamu yang mendapat akses lewat tautan personal (?name=...).
+   Nama tidak membedakan huruf besar/kecil dan spasi berlebih.
+   Tambahkan nama tamu lain di dalam array ini. */
+const GUESTS = [
+  "Anya Belliza"
+];
+
 const CATEGORIES = [
   { id: "semua", label: "Semua" },
   { id: "dapur", label: "Dapur & Masak" },

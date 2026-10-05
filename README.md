@@ -24,6 +24,7 @@ Everything lives in **`js/data.js`**:
 | WhatsApp number (`62812...` format) | `CONFIG.contact.whatsapp` |
 | Gift list | `GIFTS` |
 | Category tabs | `CATEGORIES` |
+| Registered guest names (personalized links) | `GUESTS` |
 
 ### Adding a gift
 
@@ -45,8 +46,20 @@ To use real product photos instead of icons, add an `image` field with a path or
 URL (e.g. `image: "images/stand-mixer.jpg"`). The card and modal will render the
 photo automatically.
 
+### Guest links
+
+Guests can get a personalized link such as `https://your-site.com/?name=Anya+Belliza`.
+Names must be listed in `GUESTS` (case-insensitive; extra spaces are ignored):
+
+- Registered name → the page opens and greets the guest ("Kepada Yth. ...")
+- Unknown name → the page shows an "invalid link" notice instead of the registry
+- No `name` parameter → the page opens normally for everyone
+
+Spaces can be written as `+` or `%20` in the URL.
+
 ## Features
 
+- Personalized guest links via `?name=` validated against the `GUESTS` list
 - Registry-first layout: the page opens straight on the gift list, no landing page
 - Gift list with search, category filters, and sorting
 - Gift detail modal with a WhatsApp confirmation link and the shop link

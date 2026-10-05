@@ -115,6 +115,32 @@
     );
   }
 
+  function normalizeName(value) {
+    return String(value == null ? "" : value).replace(/\s+/g, " ").trim().toLowerCase();
+  }
+
+  function guestFromURL() {
+    let name = null;
+    try {
+      name = new URLSearchParams(window.location.search).get("name");
+    } catch (err) {
+      return { allowed: true, guest: null };
+    }
+    const key = normalizeName(name);
+    if (!key) return { allowed: true, guest: null };
+    const list = typeof GUESTS === "undefined" ? [] : GUESTS;
+    const guest = list.filter(function (g) { return normalizeName(g) === key; })[0];
+    return guest ? { allowed: true, guest: guest } : { allowed: false, guest: null };
+  }
+
+  function showDenied() {
+    document.title = "Tautan tidak berlaku — Wedding Gift";
+    const denied = $("#access-denied");
+    denied.hidden = false;
+    document.body.classList.add("no-scroll");
+    hydrateIcons(denied);
+  }
+
   function renderChips() {
     const counts = { semua: GIFTS.length };
     GIFTS.forEach(function (g) { counts[g.category] = (counts[g.category] || 0) + 1; });
@@ -427,6 +453,17 @@
 
   function init() {
     applyStaticText();
+
+    const access = guestFromURL();
+    if (!access.allowed) {
+      showDenied();
+      return;
+    }
+    if (access.guest) {
+      $("#guest-greeting strong").textContent = access.guest;
+      $("#guest-greeting").hidden = false;
+    }
+
     renderChips();
     renderGifts();
     countdown();
