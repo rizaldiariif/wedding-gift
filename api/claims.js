@@ -114,6 +114,13 @@ module.exports = async function handler(req, res) {
         ]);
         const claims = hashToClaims(results[1]);
         if (Number(results[0]) !== 1) {
+          /* Already claimed: if it is this same guest (e.g. stale tab),
+             treat it as success; otherwise report the conflict. */
+          const owner = await pipeline(config, [["HGET", HASH_KEY, id]]);
+          if (normalizeName(owner[0]) === normalizeName(guest)) {
+            res.status(200).json({ claims: claims });
+            return;
+          }
           res.status(409).json({ error: "already_claimed", claims: claims });
           return;
         }

@@ -213,6 +213,9 @@
   function giftCard(gift, index) {
     const claimed = !!claims[gift.id];
     const claimant = typeof claims[gift.id] === "string" ? claims[gift.id] : "";
+    const claimTitle = claimed
+      ? (claimant && (!guestName || normalizeName(claimant) !== normalizeName(guestName)) ? "Ditandai oleh " + claimant : "Batalkan tanda sudah dibeli")
+      : "Tandai sudah dibeli";
     const media = gift.image
       ? '<img src="' + esc(gift.image) + '" alt="' + esc(gift.title) + '" loading="lazy">'
       : '<span class="gift-icon" data-icon="' + gift.icon + '"></span>';
@@ -238,7 +241,7 @@
             '<button type="button" class="btn btn-sm btn-ghost" data-open="' + gift.id + '">Detail</button>' +
             buyAction +
             (guestName
-              ? '<button type="button" class="claim-btn' + (claimed ? " is-on" : "") + '" data-claim="' + gift.id + '" title="' + (claimed ? "Batalkan tanda sudah dibeli" : "Tandai sudah dibeli") + '" aria-label="' + (claimed ? "Batalkan tanda sudah dibeli" : "Tandai sudah dibeli") + '">' +
+              ? '<button type="button" class="claim-btn' + (claimed ? " is-on" : "") + '" data-claim="' + gift.id + '" title="' + esc(claimTitle) + '" aria-label="' + esc(claimTitle) + '">' +
                   '<span class="icon" data-icon="check"></span>' +
                 "</button>"
               : "") +
