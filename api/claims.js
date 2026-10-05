@@ -1,16 +1,44 @@
 /* Global "already gifted" claims stored in Upstash Redis.
+   Each claim records the registered guest name that marked the gift.
+
    On Vercel, install the Upstash Redis integration (Storage -> Marketplace)
    and these env vars are injected automatically:
      KV_REST_API_URL / KV_REST_API_TOKEN
    Upstash-direct names also work:
      UPSTASH_REDIS_REST_URL / UPSTASH_REDIS_REST_TOKEN
 
-   GET  /api/claims                    -> { claims: { giftId: true, ... } }
-   POST /api/claims { id, action }     -> action: "claim" | "release"
-                                         409 when the gift was just claimed by someone else
+   GET  /api/claims -> { claims: { giftId: "Guest Name", ... } }
+   POST /api/claims { id, action, name }
+     action: "claim" | "release"
+     403 when the name is not in the registered guest list (GUESTS in js/data.js)
+     403 when releasing a claim owned by a different guest
+     409 when the gift was just claimed by someone else
 */
 
 const HASH_KEY = "wg:claims";
+
+let GUESTS = [];
+try {
+  const data = require("../js/data.js");
+  GUESTS = Array.isArray(data.GUESTS) ? data.GUESTS : [];
+} catch (err) {
+  GUESTS = [];
+}
+
+function normalizeName(value) {
+  return String(value == null ? "" : value).replace(/\s+/g, " ").trim().toLowerCase();
+}
+
+function resolveGuest(value) {
+  const key = normalizeName(value);
+  if (!key) return null;
+  const match = GUESTS.filter(function (g) { return normalizeName(g) === key; })[0];
+  if (match) return match;
+  /* If the guest list could not be loaded, keep the site working and accept
+     any non-empty name instead of locking everyone out. */
+  if (GUESTS.length === 0) return String(value).replace(/\s+/g, " ").trim();
+  return null;
+}
 
 function redisConfig() {
   const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
@@ -40,9 +68,9 @@ async function pipeline(config, commands) {
 function hashToClaims(value) {
   const claims = {};
   if (Array.isArray(value)) {
-    for (let i = 0; i + 1 < value.length; i += 2) claims[value[i]] = true;
+    for (let i = 0; i + 1 < value.length; i += 2) claims[value[i]] = value[i + 1] || true;
   } else if (value && typeof value === "object") {
-    Object.keys(value).forEach(function (key) { claims[key] = true; });
+    Object.keys(value).forEach(function (key) { claims[key] = value[key] || true; });
   }
   return claims;
 }
@@ -73,25 +101,45 @@ module.exports = async function handler(req, res) {
         return;
       }
 
-      if (action === "release") {
+      const guest = resolveGuest(body.name);
+      if (!guest) {
+        res.status(403).json({ error: "name_not_registered" });
+        return;
+      }
+
+      if (action === "claim") {
         const results = await pipeline(config, [
-          ["HDEL", HASH_KEY, id],
+          ["HSETNX", HASH_KEY, id, guest],
           ["HGETALL", HASH_KEY]
         ]);
-        res.status(200).json({ claims: hashToClaims(results[1]) });
+        const claims = hashToClaims(results[1]);
+        if (Number(results[0]) !== 1) {
+          res.status(409).json({ error: "already_claimed", claims: claims });
+          return;
+        }
+        res.status(200).json({ claims: claims });
         return;
       }
 
       const results = await pipeline(config, [
-        ["HSETNX", HASH_KEY, id, "1"],
+        ["HGET", HASH_KEY, id],
         ["HGETALL", HASH_KEY]
       ]);
       const claims = hashToClaims(results[1]);
-      if (Number(results[0]) !== 1) {
-        res.status(409).json({ error: "already_claimed", claims: claims });
+      const owner = results[0];
+      if (owner == null) {
+        res.status(200).json({ claims: claims });
         return;
       }
-      res.status(200).json({ claims: claims });
+      if (normalizeName(owner) !== normalizeName(guest)) {
+        res.status(403).json({ error: "not_your_claim", claims: claims });
+        return;
+      }
+      const released = await pipeline(config, [
+        ["HDEL", HASH_KEY, id],
+        ["HGETALL", HASH_KEY]
+      ]);
+      res.status(200).json({ claims: hashToClaims(released[1]) });
       return;
     }
 

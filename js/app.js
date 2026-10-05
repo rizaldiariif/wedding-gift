@@ -27,6 +27,7 @@
 
   let claims = {};
   let claimsMode = "local";
+  let guestName = null;
   const state = { query: "", category: "semua", sort: "featured" };
 
   function svgIcon(name) {
@@ -124,14 +125,14 @@
     });
   }
 
-  function postClaim(id, action) {
+  function postClaim(id, action, name) {
     return fetch(CLAIMS_API, {
       method: "POST",
       headers: { "Content-Type": "application/json", Accept: "application/json" },
-      body: JSON.stringify({ id: id, action: action })
+      body: JSON.stringify({ id: id, action: action, name: name })
     }).then(function (res) {
       return res.json().catch(function () { return {}; }).then(function (data) {
-        return { ok: res.ok, status: res.status, claims: data.claims || null };
+        return { ok: res.ok, status: res.status, claims: data.claims || null, error: data.error || "" };
       });
     });
   }
@@ -211,6 +212,7 @@
 
   function giftCard(gift, index) {
     const claimed = !!claims[gift.id];
+    const claimant = typeof claims[gift.id] === "string" ? claims[gift.id] : "";
     const media = gift.image
       ? '<img src="' + esc(gift.image) + '" alt="' + esc(gift.title) + '" loading="lazy">'
       : '<span class="gift-icon" data-icon="' + gift.icon + '"></span>';
@@ -222,7 +224,7 @@
         '<div class="gift-media cat-' + gift.category + '">' +
           media +
           (gift.featured ? '<span class="gift-badge">Paling Dibutuhkan</span>' : "") +
-          '<span class="gift-ribbon"><span class="icon" data-icon="check"></span> Sudah dibeli</span>' +
+          '<span class="gift-ribbon"' + (claimant ? ' title="Ditandai oleh ' + esc(claimant) + '"' : "") + '><span class="icon" data-icon="check"></span> Sudah dibeli</span>' +
         "</div>" +
         '<div class="gift-body">' +
           '<p class="gift-cat">' + esc(categoryLabel(gift.category)) + "</p>" +
@@ -255,6 +257,8 @@
 
   function openModal(gift) {
     const claimed = !!claims[gift.id];
+    const claimant = typeof claims[gift.id] === "string" ? claims[gift.id] : "";
+    const mine = !claimant || (!!guestName && normalizeName(claimant) === normalizeName(guestName));
     const media = gift.image
       ? '<img src="' + esc(gift.image) + '" alt="' + esc(gift.title) + '">'
       : '<span class="gift-icon" data-icon="' + gift.icon + '"></span>';
@@ -263,7 +267,7 @@
         '<div class="fact"><span>Kategori</span><strong>' + esc(categoryLabel(gift.category)) + "</strong></div>" +
         '<div class="fact"><span>Perkiraan Harga</span><strong>' + esc(priceLabel(gift)) + "</strong></div>" +
         (gift.qty > 1 ? '<div class="fact"><span>Dibutuhkan</span><strong>' + gift.qty + " buah</strong></div>" : "") +
-        '<div class="fact"><span>Status</span><strong>' + (claimed ? "Sudah dibeli" : "Belum dibeli") + "</strong></div>" +
+        '<div class="fact"><span>Status</span><strong>' + (claimed ? (claimant ? "Sudah dibeli oleh " + esc(claimant) : "Sudah dibeli") : "Belum dibeli") + "</strong></div>" +
       "</div>";
 
     const waMsg = "Halo " + CONFIG.couple.shortNames + ", saya ingin memberikan hadiah *" + gift.title + "* (" + priceLabel(gift) + ") untuk pernikahan kalian. Apakah masih dibutuhkan? Terima kasih!";
@@ -274,7 +278,9 @@
           ? '<a class="btn btn-primary" href="' + esc(gift.link) + '" target="_blank" rel="noopener"><span class="icon" data-icon="external"></span> Beli Sekarang</a>'
           : '<a class="btn btn-primary" href="' + waLink(waMsg) + '" target="_blank" rel="noopener"><span class="icon" data-icon="chat"></span> Tanya via WhatsApp</a>') +
         '<a class="btn btn-gold" href="' + waLink(waMsg) + '" target="_blank" rel="noopener"><span class="icon" data-icon="chat"></span> Konfirmasi via WA</a>' +
-        '<button type="button" class="btn btn-outline wide" data-claim="' + gift.id + '"><span class="icon" data-icon="check"></span> ' + (claimed ? "Batalkan tanda sudah dibeli" : "Tandai sudah dibeli") + "</button>" +
+        (claimed && !mine
+          ? '<button type="button" class="btn btn-outline wide" data-claim="' + gift.id + '"><span class="icon" data-icon="check"></span> Ditandai oleh ' + esc(claimant) + "</button>"
+          : '<button type="button" class="btn btn-outline wide" data-claim="' + gift.id + '"><span class="icon" data-icon="check"></span> ' + (claimed ? "Batalkan tanda sudah dibeli" : "Tandai sudah dibeli") + "</button>") +
       "</div>";
 
     $("#modal-body").innerHTML =
@@ -284,7 +290,7 @@
         '<h3 id="modal-title">' + esc(gift.title) + "</h3>" +
         '<p class="desc">' + esc(gift.desc) + "</p>" +
         facts +
-        '<p class="modal-note">Tanda “sudah dibeli” tersimpan bersama dan terlihat semua tamu. Mohon konfirmasi via WhatsApp agar tidak dobel.</p>' +
+        '<p class="modal-note">Tanda “sudah dibeli” tersimpan bersama nama tamu yang menandainya. Mohon konfirmasi via WhatsApp agar tidak dobel.</p>' +
         actions +
       "</div>";
 
@@ -315,31 +321,49 @@
 
   function toggleClaim(id) {
     const gift = giftById(id);
-    const action = claims[id] ? "release" : "claim";
-    const doneMessage = action === "release" ? "Tanda dihapus: " + gift.title : "Ditandai: " + gift.title;
+    const current = claims[id];
+    const currentName = typeof current === "string" ? current : "";
 
     if (claimsMode === "local") {
-      if (action === "release") delete claims[id]; else claims[id] = true;
+      if (current) delete claims[id]; else claims[id] = true;
       store.set(CLAIMS_KEY, claims);
       settleClaim(id);
-      toast(doneMessage);
+      toast(current ? "Tanda dihapus: " + gift.title : "Ditandai: " + gift.title);
       return;
     }
 
-    if (action === "release") delete claims[id]; else claims[id] = true;
+    if (!guestName) {
+      toast("Buka tautan pribadi Anda untuk menandai hadiah");
+      return;
+    }
+
+    if (currentName && normalizeName(currentName) !== normalizeName(guestName)) {
+      toast("Sudah ditandai oleh " + currentName);
+      return;
+    }
+
+    const action = current ? "release" : "claim";
+    const doneMessage = action === "release" ? "Tanda dihapus: " + gift.title : "Ditandai: " + gift.title;
+
+    if (action === "release") delete claims[id]; else claims[id] = guestName;
     renderGifts();
 
-    postClaim(id, action).then(function (result) {
+    postClaim(id, action, guestName).then(function (result) {
       if (result.status === 409) {
         settleClaim(id, result.claims);
         toast("Hadiah ini baru saja ditandai tamu lain");
+        return;
+      }
+      if (result.status === 403) {
+        settleClaim(id, result.claims);
+        toast(result.error === "not_your_claim" ? "Sudah ditandai oleh tamu lain" : "Nama Anda tidak terdaftar");
         return;
       }
       if (!result.ok) throw new Error("HTTP " + result.status);
       settleClaim(id, result.claims);
       toast(doneMessage);
     }).catch(function () {
-      if (action === "release") claims[id] = true; else delete claims[id];
+      if (action === "release") claims[id] = current; else delete claims[id];
       renderGifts();
       toast("Gagal menyimpan, coba lagi");
     });
@@ -524,6 +548,7 @@
       return;
     }
     if (access.guest) {
+      guestName = access.guest;
       $("#guest-greeting strong").textContent = access.guest;
       $("#guest-greeting").hidden = false;
     }

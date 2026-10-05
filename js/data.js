@@ -284,3 +284,8 @@ const GIFTS = [
     link: ""
   }
 ];
+
+/* Dipakai server (api/claims.js) untuk memvalidasi nama tamu terdaftar. */
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = { GUESTS: GUESTS };
+}
