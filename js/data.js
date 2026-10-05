@@ -154,6 +154,17 @@ const GIFTS = [
     image: "images/xiaomi-air-purifier-4-compact.jpg",
     qty: 1,
     link: "https://shopee.co.id/Xiaomi-Air-Purifier-4-Compact-OLED-Filter-3-in-1-Hemat-Energi-Hilangkan-Alergen-Smart-Control-i.550839933.14591288534?extraParams=%7B%22display_model_id%22%3A117253992792%2C%22model_selection_logic%22%3A3%7D"
+  },
+  {
+    id: "remington-s5408",
+    title: "Remington Catokan Mineral Glow S5408",
+    desc: "Catokan pelurus rambut dengan pelat keramik ber-mineral alami untuk hasil styling halus dan berkilau.",
+    price: 799200,
+    category: "lainnya",
+    icon: "sparkle",
+    image: "images/remington-s5408.jpg",
+    qty: 1,
+    link: "https://shopee.co.id/Remington-Catokan-Pelurus-Rambut-Mineral-Glow-S5408-i.44277832.4465739778?extraParams=%7B%22display_model_id%22%3A161126274006%2C%22model_selection_logic%22%3A3%7D"
   }
 ];
 
