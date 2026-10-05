@@ -213,8 +213,9 @@
   function giftCard(gift, index) {
     const claimed = !!claims[gift.id];
     const claimant = typeof claims[gift.id] === "string" ? claims[gift.id] : "";
+    const mine = !claimant || (!!guestName && normalizeName(claimant) === normalizeName(guestName));
     const claimTitle = claimed
-      ? (claimant && (!guestName || normalizeName(claimant) !== normalizeName(guestName)) ? "Ditandai oleh " + claimant : "Batalkan tanda sudah dibeli")
+      ? (mine ? "Batalkan tanda sudah dibeli" : "Sudah ditandai tamu lain")
       : "Tandai sudah dibeli";
     const media = gift.image
       ? '<img src="' + esc(gift.image) + '" alt="' + esc(gift.title) + '" loading="lazy">'
@@ -227,7 +228,7 @@
         '<div class="gift-media cat-' + gift.category + '">' +
           media +
           (gift.featured ? '<span class="gift-badge">Paling Dibutuhkan</span>' : "") +
-          '<span class="gift-ribbon"' + (claimant ? ' title="Ditandai oleh ' + esc(claimant) + '"' : "") + '><span class="icon" data-icon="check"></span> Sudah dibeli</span>' +
+          '<span class="gift-ribbon"><span class="icon" data-icon="check"></span> Sudah dibeli</span>' +
         "</div>" +
         '<div class="gift-body">' +
           '<p class="gift-cat">' + esc(categoryLabel(gift.category)) + "</p>" +
@@ -272,7 +273,7 @@
         '<div class="fact"><span>Kategori</span><strong>' + esc(categoryLabel(gift.category)) + "</strong></div>" +
         '<div class="fact"><span>Perkiraan Harga</span><strong>' + esc(priceLabel(gift)) + "</strong></div>" +
         (gift.qty > 1 ? '<div class="fact"><span>Dibutuhkan</span><strong>' + gift.qty + " buah</strong></div>" : "") +
-        '<div class="fact"><span>Status</span><strong>' + (claimed ? (claimant ? "Sudah dibeli oleh " + esc(claimant) : "Sudah dibeli") : "Belum dibeli") + "</strong></div>" +
+        '<div class="fact"><span>Status</span><strong>' + (claimed ? (mine && claimant ? "Sudah dibeli oleh Anda" : "Sudah dibeli") : "Belum dibeli") + "</strong></div>" +
       "</div>";
 
     const waMsg = "Halo " + CONFIG.couple.shortNames + ", saya ingin memberikan hadiah *" + gift.title + "* (" + priceLabel(gift) + ") untuk pernikahan kalian. Apakah masih dibutuhkan? Terima kasih!";
@@ -285,7 +286,7 @@
         '<a class="btn btn-gold" href="' + waLink(waMsg) + '" target="_blank" rel="noopener"><span class="icon" data-icon="chat"></span> Konfirmasi via WA</a>' +
         (guestName
           ? (claimed && !mine
-              ? '<button type="button" class="btn btn-outline wide" data-claim="' + gift.id + '"><span class="icon" data-icon="check"></span> Ditandai oleh ' + esc(claimant) + "</button>"
+              ? '<button type="button" class="btn btn-outline wide" data-claim="' + gift.id + '"><span class="icon" data-icon="check"></span> Sudah ditandai tamu lain</button>'
               : '<button type="button" class="btn btn-outline wide" data-claim="' + gift.id + '"><span class="icon" data-icon="check"></span> ' + (claimed ? "Batalkan tanda sudah dibeli" : "Tandai sudah dibeli") + "</button>")
           : "") +
       "</div>";
@@ -345,7 +346,7 @@
     }
 
     if (currentName && normalizeName(currentName) !== normalizeName(guestName)) {
-      toast("Sudah ditandai oleh " + currentName);
+      toast("Sudah ditandai tamu lain");
       return;
     }
 
