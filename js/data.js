@@ -39,7 +39,9 @@ const CONFIG = {
 const GUESTS = [
   "smgeng",
   "exvoila",
-  "makanmakan"
+  "makanmakan",
+  "hamba allah",
+  "orang baik"
 ];
 
 const CATEGORIES = [
