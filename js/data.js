@@ -37,7 +37,8 @@ const CONFIG = {
    Nama tidak membedakan huruf besar/kecil dan spasi berlebih.
    Tambahkan nama tamu lain di dalam array ini. */
 const GUESTS = [
-  "Anya Belliza"
+  "Anya Belliza",
+  "Alvira"
 ];
 
 const CATEGORIES = [
