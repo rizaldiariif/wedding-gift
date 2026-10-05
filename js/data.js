@@ -200,6 +200,17 @@ const GIFTS = [
     image: "images/xiaomi-garment-steamer.jpg",
     qty: 1,
     link: "https://shopee.co.id/Xiaomi-Handheld-Garment-Steamer-Setrika-Uap-1300W-Rapid-Heating-Kurang-Dari-26-Detik-Garansi-Resmi-i.550839933.28306395374?extraParams=%7B%22display_model_id%22%3A197682090202%2C%22model_selection_logic%22%3A3%7D"
+  },
+  {
+    id: "kintakun-bedcover-b2",
+    title: "Kintakun Lite Bedcover Set 160x200",
+    desc: "Set bedcover 6-in-1 queen 160x200 dengan sprei fitted tinggi 20 cm, motif bunga minimalis.",
+    price: 334000,
+    category: "rumah",
+    icon: "bed",
+    image: "images/kintakun-bedcover.jpg",
+    qty: 1,
+    link: "https://shopee.co.id/Kintakun-Lite-Bedcover-Set-160x200-Queen-Fitted-T20-cm-Sprei-Set-Aesthetic-Minimalis-Flower-Motif-B2-6in1-i.48708202.16499068893?extraParams=%7B%22display_model_id%22%3A325535660199%2C%22model_selection_logic%22%3A3%7D"
   }
 ];
 
