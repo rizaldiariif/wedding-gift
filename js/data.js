@@ -176,6 +176,17 @@ const GIFTS = [
     image: "images/philips-hair-dryer-3000.jpg",
     qty: 1,
     link: "https://shopee.co.id/Philips-Hair-Dryer-3000-Pengering-Rambut-Melindungi-Rambut-dengan-ThermoProtect-Teknologi-Hitam-BHD308-10-i.438891817.8854227554?extraParams=%7B%22display_model_id%22%3A75392726733%2C%22model_selection_logic%22%3A3%7D"
+  },
+  {
+    id: "xiaomi-coffee-machine",
+    title: "Xiaomi Mijia Coffee Machine",
+    desc: "Mesin kopi espresso semi-otomatis dengan tekanan hingga 20 Bar dan kontrol suhu NTC presisi.",
+    price: 1979000,
+    category: "dapur",
+    icon: "coffee",
+    image: "images/xiaomi-coffee-machine.jpg",
+    qty: 1,
+    link: "https://shopee.co.id/Xiaomi-Mijia-Coffee-Machine-Series-Xiaomi-Semi-automatic-Espresso-Mijia-Capsule-Coffee-Machine-Ekstraksi-Maksimal-tekanan-hingga-20-Bar-NTC-Kontrol-Suhu-Xiaomi-Official-Store--i.1453736730.43069961379?extraParams=%7B%22display_model_id%22%3A325946735154%2C%22model_selection_logic%22%3A3%7D"
   }
 ];
 
