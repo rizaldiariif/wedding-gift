@@ -149,7 +149,7 @@
     Object.keys(map).forEach(function (key) {
       $$('[data-text="' + key + '"]').forEach(function (el) { el.textContent = map[key]; });
     });
-    document.title = "Wedding Gift — " + CONFIG.couple.names;
+    document.title = "Daftar Hadiah Pernikahan " + CONFIG.couple.names;
     $("#nav-wa").href = waLink(
       "Halo " + CONFIG.couple.shortNames + ", saya ingin bertanya mengenai daftar hadiah pernikahan kalian."
     );
