@@ -6,11 +6,11 @@
 
 const CONFIG = {
   couple: {
-    groom: "Rizaldi",
-    bride: "Defalia",
-    monogram: "R & D",
-    shortNames: "Rizaldi & Defalia",
-    names: "Rizaldi & Defalia"
+    groom: "Aldi",
+    bride: "Defa",
+    monogram: "D & A",
+    shortNames: "Defa & Aldi",
+    names: "Defa & Aldi"
   },
 
   wedding: {
