@@ -14,8 +14,8 @@ const CONFIG = {
   },
 
   wedding: {
-    dateISO: "2026-12-12T09:00:00+07:00",
-    dateLabel: "Sabtu, 12 Desember 2026",
+    dateISO: "2026-10-11T09:00:00+07:00",
+    dateLabel: "Minggu, 11 Oktober 2026",
     city: "Jakarta",
     akad: "09.00 WIB",
     resepsi: "11.00 – 14.00 WIB",
