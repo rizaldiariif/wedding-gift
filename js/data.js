@@ -132,6 +132,28 @@ const GIFTS = [
     image: "images/gree-circool.jpg",
     qty: 1,
     link: "https://www.tokopedia.com/gadventia/gree-circool-13s-dan-circool-14l-air-circulation-fan-ion-plasma-circool-kipas-angin-pendingin-ruangan-tamu-kamar-tidur-kantor-gcf-circool-13s-gcf-circool-14l-1730355449051318167?aff_unique_id=VjgLB722aX_I8eF11KqyJt5rQmeFGXWAKUhN5sU5TF6EZJQKRGiPk8HC9F6HJMb9dbctIECJPQ%3D%3D&channel=salinlink&utm_source=salinlink&utm_medium=affiliate-share&utm_campaign=affiliateshare-pdp-VjgLB722aX_I8eF11KqyJt5rQmeFGXWAKUhN5sU5TF6EZJQKRGiPk8HC9F6HJMb9dbctIECJPQ%3D%3D-100000258721-0-051026&scene=pdp"
+  },
+  {
+    id: "xiaomi-vacuum-s40c",
+    title: "Xiaomi Robot Vacuum S40C",
+    desc: "Robot vacuum dan pel otomatis dengan navigasi laser LDS presisi serta daya isap kuat 5.000Pa.",
+    price: 2299000,
+    category: "rumah",
+    icon: "vacuum",
+    image: "images/xiaomi-vacuum-s40c.jpg",
+    qty: 1,
+    link: "https://shopee.co.id/Xiaomi-Robot-Vacuum-S40C-Navigasi-laser-LDS-lebih-presisi-Kontrol-cerdas-via-Xiaomi-Home-App-Sapu-pel-otomatis-dalam-satu-alat-Daya-isap-kuat-5.000Pa-untuk-bersih-maksimal-Tangki-besar-untuk-debu-dan-air-Official-Store--i.1453736730.44173044135?extraParams=%7B%22display_model_id%22%3A177335900503%2C%22model_selection_logic%22%3A3%7D"
+  },
+  {
+    id: "xiaomi-air-purifier-4-compact",
+    title: "Xiaomi Air Purifier 4 Compact",
+    desc: "Pembersih udara compact dengan filter 3-in-1 dan layar OLED, bisa dikontrol via aplikasi Xiaomi Home.",
+    price: 1199000,
+    category: "rumah",
+    icon: "vacuum",
+    image: "images/xiaomi-air-purifier-4-compact.jpg",
+    qty: 1,
+    link: "https://shopee.co.id/Xiaomi-Air-Purifier-4-Compact-OLED-Filter-3-in-1-Hemat-Energi-Hilangkan-Alergen-Smart-Control-i.550839933.14591288534?extraParams=%7B%22display_model_id%22%3A117253992792%2C%22model_selection_logic%22%3A3%7D"
   }
 ];
 
