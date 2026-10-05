@@ -237,9 +237,11 @@
           '<div class="gift-actions">' +
             '<button type="button" class="btn btn-sm btn-ghost" data-open="' + gift.id + '">Detail</button>' +
             buyAction +
-            '<button type="button" class="claim-btn' + (claimed ? " is-on" : "") + '" data-claim="' + gift.id + '" title="' + (claimed ? "Batalkan tanda sudah dibeli" : "Tandai sudah dibeli") + '" aria-label="' + (claimed ? "Batalkan tanda sudah dibeli" : "Tandai sudah dibeli") + '">' +
-              '<span class="icon" data-icon="check"></span>' +
-            "</button>" +
+            (guestName
+              ? '<button type="button" class="claim-btn' + (claimed ? " is-on" : "") + '" data-claim="' + gift.id + '" title="' + (claimed ? "Batalkan tanda sudah dibeli" : "Tandai sudah dibeli") + '" aria-label="' + (claimed ? "Batalkan tanda sudah dibeli" : "Tandai sudah dibeli") + '">' +
+                  '<span class="icon" data-icon="check"></span>' +
+                "</button>"
+              : "") +
           "</div>" +
         "</div>" +
       "</article>"
@@ -278,9 +280,11 @@
           ? '<a class="btn btn-primary" href="' + esc(gift.link) + '" target="_blank" rel="noopener"><span class="icon" data-icon="external"></span> Beli Sekarang</a>'
           : '<a class="btn btn-primary" href="' + waLink(waMsg) + '" target="_blank" rel="noopener"><span class="icon" data-icon="chat"></span> Tanya via WhatsApp</a>') +
         '<a class="btn btn-gold" href="' + waLink(waMsg) + '" target="_blank" rel="noopener"><span class="icon" data-icon="chat"></span> Konfirmasi via WA</a>' +
-        (claimed && !mine
-          ? '<button type="button" class="btn btn-outline wide" data-claim="' + gift.id + '"><span class="icon" data-icon="check"></span> Ditandai oleh ' + esc(claimant) + "</button>"
-          : '<button type="button" class="btn btn-outline wide" data-claim="' + gift.id + '"><span class="icon" data-icon="check"></span> ' + (claimed ? "Batalkan tanda sudah dibeli" : "Tandai sudah dibeli") + "</button>") +
+        (guestName
+          ? (claimed && !mine
+              ? '<button type="button" class="btn btn-outline wide" data-claim="' + gift.id + '"><span class="icon" data-icon="check"></span> Ditandai oleh ' + esc(claimant) + "</button>"
+              : '<button type="button" class="btn btn-outline wide" data-claim="' + gift.id + '"><span class="icon" data-icon="check"></span> ' + (claimed ? "Batalkan tanda sudah dibeli" : "Tandai sudah dibeli") + "</button>")
+          : "") +
       "</div>";
 
     $("#modal-body").innerHTML =

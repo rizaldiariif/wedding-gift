@@ -53,7 +53,7 @@ Names must be listed in `GUESTS` (case-insensitive; extra spaces are ignored):
 
 - Registered name → the page opens, greets the guest ("Kepada Yth. ..."), and they can mark gifts
 - Unknown name → the page shows an "invalid link" notice instead of the registry
-- No `name` parameter → the page opens normally, but marking a gift requires a personal link
+- No `name` parameter → the page opens normally, but the check/mark buttons are hidden
 
 Spaces can be written as `+` or `%20` in the URL.
 
