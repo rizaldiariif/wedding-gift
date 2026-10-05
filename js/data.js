@@ -180,15 +180,15 @@ const GIFTS = [
     link: "https://shopee.co.id/Kintakun-Lite-Bedcover-Set-160x200-Queen-Fitted-T20-cm-Sprei-Set-Aesthetic-Minimalis-Flower-Motif-B2-6in1-i.48708202.16499068893?extraParams=%7B%22display_model_id%22%3A325535660199%2C%22model_selection_logic%22%3A3%7D"
   },
   {
-    id: "ninja-nutri-blender",
-    title: "Ninja Nutri-Blender Plus",
-    desc: "Personal blender 700W dengan Pro Extractor Blades yang sanggup menghancurkan es dan bahan keras.",
-    price: 1709100,
+    id: "ninja-blast-blender",
+    title: "Ninja Blast Portable Blender",
+    desc: "Blender portabel tanpa kabel dengan wadah 470ml dan pengisian USB-C, praktis untuk smoothie dan minuman dingin.",
+    price: 1299000,
     category: "dapur",
     icon: "blender",
-    image: "images/ninja-nutri-blender.jpg",
+    image: "images/ninja-blast-blender.jpg",
     qty: 1,
-    link: "https://shopee.co.id/product/1338593823/28566563351"
+    link: "https://shopee.co.id/Ninja-Blast-Portable-Blender-i.1338593823.28266575024"
   }
 ];
 
