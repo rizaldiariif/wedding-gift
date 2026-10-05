@@ -189,6 +189,17 @@ const GIFTS = [
     image: "images/xiaomi-coffee-machine.jpg",
     qty: 1,
     link: "https://shopee.co.id/Xiaomi-Mijia-Coffee-Machine-Series-Xiaomi-Semi-automatic-Espresso-Mijia-Capsule-Coffee-Machine-Ekstraksi-Maksimal-tekanan-hingga-20-Bar-NTC-Kontrol-Suhu-Xiaomi-Official-Store--i.1453736730.43069961379?extraParams=%7B%22display_model_id%22%3A325946735154%2C%22model_selection_logic%22%3A3%7D"
+  },
+  {
+    id: "xiaomi-garment-steamer",
+    title: "Xiaomi Handheld Garment Steamer",
+    desc: "Setrika uap genggam 1300W dengan pemanasan kurang dari 26 detik, ringan dan mudah dibawa.",
+    price: 398000,
+    category: "rumah",
+    icon: "iron",
+    image: "images/xiaomi-garment-steamer.jpg",
+    qty: 1,
+    link: "https://shopee.co.id/Xiaomi-Handheld-Garment-Steamer-Setrika-Uap-1300W-Rapid-Heating-Kurang-Dari-26-Detik-Garansi-Resmi-i.550839933.28306395374?extraParams=%7B%22display_model_id%22%3A197682090202%2C%22model_selection_logic%22%3A3%7D"
   }
 ];
 
