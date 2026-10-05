@@ -28,8 +28,8 @@ const CONFIG = {
   },
 
   contact: {
-    whatsapp: "6281234567890",
-    phoneLabel: "+62 812-3456-7890"
+    whatsapp: "6281319794593",
+    phoneLabel: "+62 813-1979-4593"
   }
 };
 
