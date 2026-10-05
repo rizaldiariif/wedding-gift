@@ -82,10 +82,41 @@ const ICONS = {
   "chevron-down": '<path d="M6 9l6 6 6-6"/>',
   external: '<path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>',
   sparkle: '<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/>',
+  fan: '<path d="M10.827 16.379a6.082 6.082 0 0 1-8.618-7.002l5.412 1.45a6.082 6.082 0 0 1 7.002-8.618l-1.45 5.412a6.082 6.082 0 0 1 8.618 7.002l-5.412-1.45a6.082 6.082 0 0 1-7.002 8.618l1.45-5.412Z"/><path d="M12 12v.01"/>',
   send: '<path d="M21 3L3 11l7 2 2 7 9-17z"/><path d="M21 3l-11 10"/>'
 };
 
 const GIFTS = [
+  {
+    id: "air-purifier",
+    title: "MISS LIFE Air Purifier K1 Max",
+    desc: "Pembersih udara HEPA + UV dengan ion negatif, hemat listrik untuk kamar dan ruang keluarga.",
+    price: 774900,
+    category: "rumah",
+    icon: "vacuum",
+    qty: 1,
+    link: "https://www.tokopedia.com/misslifeindonesia-848/miss-life-air-purifier-pembersih-udara-ruangan-terbaik-dengan-hepa-filter-anti-bakteri-sterilisasi-dengan-sinar-uv-hemat-listrik-dan-ion-negatif-mengatasi-debu-bau-alergen-dan-bau-aneh-dan-bulu-hewan-peliharaan-one-home-air-purifier-1729935472290924893-1737577933734053213"
+  },
+  {
+    id: "handheld-fan",
+    title: "Aerlia Handheld Fan Mist 5000mAh",
+    desc: "Kipas angin portabel dengan spray mist dan layar LED, baterai 5000mAh. Paket Buy 1 Get 1.",
+    price: 270999,
+    category: "elektronik",
+    icon: "fan",
+    qty: 1,
+    link: "https://www.tokopedia.com/aerlia-indonesia/buy-1-get-1-baterai-berkapasitas-besar-5000mah-aerlia-handheld-fan-mist-high-speed-handheld-spray-fan-kipas-angin-portable-with-led-display-5000mah-50mltank-capacity-100-air-speeds-spray-mode-hydrate-moisturizing-1737018283860068004-1737018334044260004"
+  },
+  {
+    id: "steamer-philips",
+    title: "Philips Handheld Steamer STH5030",
+    desc: "Setrika uap portabel yang ringan dan fleksibel untuk merapikan pakaian.",
+    price: 708400,
+    category: "rumah",
+    icon: "iron",
+    qty: 1,
+    link: "https://www.tokopedia.com/philips-estore/philips-handheld-steamer-sth5030-biru-setrika-uap-listrik-paling-fleksibel-portabel-setrika-uap-ringan-philips-setrika-uap-setrika-uap-listrik-strika-uap-setrika-philips-uap-sth5030-20-1730180217855772662"
+  },
   {
     id: "stand-mixer",
     title: "Stand Mixer Premium",
